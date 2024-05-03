@@ -7,7 +7,7 @@
 React
 Vite
 TypeScript
-Sass
+TailwindCSS
 Solidity
 third-web
 Docker
