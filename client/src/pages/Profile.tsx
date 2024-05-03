@@ -1,7 +1,7 @@
-const Profile = () => {
-  return (
-    <div>Profile</div>
-  )
-}
+import { PageTransition } from "../components";
 
-export default Profile
+const Profile = () => {
+  return <PageTransition>Profile</PageTransition>;
+};
+
+export default Profile;

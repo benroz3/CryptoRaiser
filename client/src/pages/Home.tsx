@@ -1,6 +1,8 @@
+import { PageTransition } from "../components"
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <PageTransition>Home</PageTransition>
   )
 }
 

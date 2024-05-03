@@ -1,13 +1,17 @@
 # CryptoRaiser
  A Web3 Blockchain Crowdfunding Platform.
 
- ## [Demo Link]()
+ [Demo Link]()
+ 
+ ![Showcase Image]()
 
 ## Technologies used
 React
 Vite
 TypeScript
 TailwindCSS
+Redux Toolkit
+Framer Motion
 Solidity
 third-web
 Docker
