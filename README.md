@@ -23,4 +23,4 @@ Docker
 3. Run `docker build -t my-vite-app .`
 4. Run `docker run -p 3000:3000 my-vite-app`
 
-* Different readme file in the thirdweb-contracts folder.
+* Different README file in the thirdweb-contracts folder.
