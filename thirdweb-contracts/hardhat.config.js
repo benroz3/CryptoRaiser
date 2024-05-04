@@ -33,12 +33,15 @@ module.exports = {
   // },
   solidity: {
     version: "0.8.17",
-    default: "linea sepolia",
+    default: "sepolia", //keep for testing
+    // default: "ethereum",
     networks: {
       hardhat: {},
-      goerli: {
-        url: "https://rpc.sepolia.linea.build",
-        accounts: [`0x${process.env.PRIVATE_KEY}`],
+      // ethereumMainnet: {
+      sepolia: {  //keep for testing
+        // url: "https://mainnet.infura.io/v3/",
+        url: "https://sepolia.infura.io/v3/",  //keep for testing
+        accounts: [`${process.env.PRIVATE_KEY}`],
       },
     },
     settings: {

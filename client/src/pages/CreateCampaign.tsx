@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
+import { useStateContext } from "../utils/Context";
 import { CustomButton, FormField, PageTransition } from "../components";
 import { checkIfImage } from "../utils/helperFunc";
 import { money } from "../assets";
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
+  const { createCampaign } = useStateContext();
 
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: "",
     title: "",
     description: "",
-    target: "",
+    target: "0",
     deadline: "",
     image: "",
   });
@@ -28,6 +31,36 @@ const CreateCampaign = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setLoading(true);
+
+    if (
+      !form.name ||
+      !form.title ||
+      !form.description ||
+      !form.target ||
+      !form.deadline ||
+      !form.image
+    ) {
+      toast.error("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
+
+    checkIfImage(form.image, async (exists: boolean) => {
+      if (exists) {
+        await createCampaign({ ...form, target: ethers.utils.parseUnits(form.target.toString()).toString() });
+        setLoading(false);
+        navigate("/");
+      }
+      else {
+        toast.error("Please provide a valid image URL");
+        setForm({...form, image: "" });
+      }
+
+    });
+
+    const targetString = ethers.utils.parseUnits(form.target.toString());
+    await createCampaign({ ...form, target: targetString.toString() });
+    setLoading(false);
   };
 
   return (

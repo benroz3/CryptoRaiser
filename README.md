@@ -10,7 +10,6 @@
 * Vite
 * TypeScript
 * TailwindCSS
-* Redux Toolkit
 * Framer Motion
 * Solidity
 * third-web
@@ -30,3 +29,8 @@
 4. Run `docker run -p 3000:3000 CryptoRaiser`
 
 * Different README file in the thirdweb-contracts folder.
+
+## Important links
+
+1. [Thirdweb](https://thirdweb.com/) - for creating a contract and deploying it to the blockchain.
+2. [infura](https://app.infura.io/) - for creating an account and getting an API key.

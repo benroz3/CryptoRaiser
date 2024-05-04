@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useConnect, metamaskWallet } from "@thirdweb-dev/react";
+import { useStateContext } from "../utils/Context";
 import { CustomButton } from "./";
 import { navLinks } from "../utils/routes";
 import { logo, menu, search, thirdweb } from "../assets";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const connect = useConnect();
+
   const [isActive, setIsActive] = useState("dashboard");
   const [toggleDrawer, setToggleDrawer] = useState(false);
 
-  //!dummy data
-  const address = "0xabc";
+  const { address } = useStateContext();
+  const metamaskConfig = metamaskWallet();
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
@@ -35,11 +39,11 @@ const Navbar = () => {
           styles={
             address
               ? "bg-[#1dc071] hover:bg-[#4acd8d] transition"
-              : "bg-[#8c6dfd] hover:bg-[#4acd8d] transition"
+              : "bg-[#8c6dfd] hover:bg-[#bf8bf3] transition"
           }
-          handleClick={() => {
+          handleClick={async () => {
             if (address) navigate("create-campaign");
-            else "connect()";
+            else await connect(metamaskConfig);
           }}
         />
         <Link to="/profile">
@@ -55,7 +59,7 @@ const Navbar = () => {
       <div className="sm:hidden flex justify-between items-center relative">
         <div className="w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center cursor-pointer hover:bg-[#59595a] transition">
           <img
-            src={thirdweb}
+            src={logo}
             alt="user"
             className="w-[60%] h-[60%] object-contain"
           />
@@ -93,7 +97,7 @@ const Navbar = () => {
                 />
                 <p
                   className={`ml-[20px] font-epilogue font-semibold text-[14px] ${
-                    isActive === link.name ? "text-[$1dc071]" : "text-[#808191]"
+                    isActive === link.name ? "text-[$1dc071]" : "text-[#8e8091]"
                   }`}
                 >
                   {link.name}
@@ -106,9 +110,9 @@ const Navbar = () => {
               btnType={"button"}
               title={address ? "Create a campaign" : "Connect"}
               styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
-              handleClick={() => {
+              handleClick={async () => {
                 if (address) navigate("create-campaign");
-                else "connect()";
+                else await connect(metamaskConfig);
               }}
             />
           </div>
