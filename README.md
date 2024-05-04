@@ -6,15 +6,15 @@
  ![Showcase Image]()
 
 ## Technologies used
-React
-Vite
-TypeScript
-TailwindCSS
-Redux Toolkit
-Framer Motion
-Solidity
-third-web
-Docker
+* React
+* Vite
+* TypeScript
+* TailwindCSS
+* Redux Toolkit
+* Framer Motion
+* Solidity
+* third-web
+* Docker
 
 ### Run Locally
 1. `cd client`
