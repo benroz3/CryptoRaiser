@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDisconnect } from "@thirdweb-dev/react";
 import { navLinks } from "../utils/routes";
@@ -10,6 +10,8 @@ interface Props {
   imgUrl?: string;
   isActive?: string;
   logout?: boolean;
+  lightMode?: boolean;
+  setLightMode?: Dispatch<SetStateAction<boolean>>;
   handleClick?: () => void;
 }
 
@@ -19,6 +21,8 @@ const Icon = ({
   imgUrl,
   isActive,
   logout,
+  lightMode = false,
+  setLightMode,
   handleClick,
 }: Props) => {
   const disconnect = useDisconnect();
@@ -37,6 +41,9 @@ const Icon = ({
           style={{ filter: "invert(1)" }}
           alt={"logo"}
           className={`w-1/2 h-1/2`}
+          onClick={() => {
+            if (lightMode && setLightMode) setLightMode((prev) => !prev);
+          }}
         />
       ) : (
         <img
@@ -50,7 +57,11 @@ const Icon = ({
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({
+  setLightMode,
+}: {
+  setLightMode: Dispatch<SetStateAction<boolean>>;
+}) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("dashboard");
 
@@ -74,7 +85,12 @@ const Sidebar = () => {
             />
           ))}
         </div>
-        <Icon style="bg-[#1c1c24] shadow-secondary" imgUrl={sun} />
+        <Icon
+          style="bg-[#1c1c24] shadow-secondary"
+          imgUrl={sun}
+          lightMode={true}
+          setLightMode={setLightMode}
+        />
       </div>
     </div>
   );
