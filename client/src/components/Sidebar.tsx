@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDisconnect } from "@thirdweb-dev/react";
 import { navLinks } from "../utils/routes";
 import { logo, sun } from "../assets";
 
@@ -8,7 +9,7 @@ interface Props {
   name?: string;
   imgUrl?: string;
   isActive?: string;
-  disabled?: boolean;
+  logout?: boolean;
   handleClick?: () => void;
 }
 
@@ -17,17 +18,18 @@ const Icon = ({
   name,
   imgUrl,
   isActive,
-  disabled,
+  logout,
   handleClick,
 }: Props) => {
+  const disconnect = useDisconnect();
+
   return (
     <div
-      className={`w-[48px] h-[48px] rounded-[10px] flex justify-center items-center hover:bg-[#3d3e3f] transition
+      className={`w-[48px] h-[48px] rounded-[10px] flex justify-center items-center hover:bg-[#3d3e3f] transition cursor-pointer
       ${style}
       ${isActive && isActive === name && "bg-[#2c2f32]"}
-      ${!disabled && "cursor-pointer"}
       `}
-      onClick={handleClick}
+      onClick={logout ? disconnect : handleClick}
     >
       {!isActive ? (
         <img
@@ -65,10 +67,9 @@ const Sidebar = () => {
               {...link}
               isActive={isActive}
               handleClick={() => {
-                if (!link.disabled) {
-                  setIsActive(link.name);
-                  navigate(link.link);
-                }
+                if (link.logout) return;
+                setIsActive(link.name);
+                navigate(link.link);
               }}
             />
           ))}
