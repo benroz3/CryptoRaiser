@@ -1,3 +1,5 @@
+import { SmartContract } from "@thirdweb-dev/sdk";
+
 export interface StateType {
   campaign: FormType;
 }
@@ -19,4 +21,12 @@ export interface CampaignType {
   deadline: Date;
   amountCollected: string;
   image: string;
+}
+
+export interface StateContextType {
+  address: string;
+  contract: SmartContract;
+  createCampaign: (form: FormType) => Promise<void>;
+  getCampaigns: () => Promise<CampaignType[]>;
+  getUserCampaigns: () => Promise<CampaignType[]>;
 }
