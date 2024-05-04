@@ -14,7 +14,15 @@ const DisplayCampaigns = ({ title, campaigns, loading }: Props) => {
   const navigate = useNavigate();
 
   const handleNavigate = (campaign: CampaignType) => {
-    navigate(`/campaign-details/${campaign.title}`, {
+    const titleWithoutSpaces = campaign.title
+      .split(/\s+/)
+      .map((word, index) => {
+        if (index === 0) return word;
+        else return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join("");
+
+    navigate(`/campaign-details/${titleWithoutSpaces}`, {
       state: {
         campaign,
       },

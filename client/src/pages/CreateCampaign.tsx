@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import { useStateContext } from "../utils/Context";
-import { CustomButton, FormField, PageTransition } from "../components";
+import { CustomButton, FormField, Loader, PageTransition } from "../components";
 import { checkIfImage } from "../utils/helperFunc";
 import { money } from "../assets";
 
@@ -40,39 +40,53 @@ const CreateCampaign = () => {
       !form.deadline ||
       !form.image
     ) {
-      toast.error("Please fill in all fields");
+      toast.error("Please fill in all fields", {
+        autoClose: 3000,
+        draggable: true,
+        pauseOnHover: false,
+      });
       setLoading(false);
       return;
     }
 
     checkIfImage(form.image, async (exists: boolean) => {
+      try {
+        
       if (exists) {
         await createCampaign({
           ...form,
           target: ethers.utils.parseUnits(form.target.toString()).toString(),
         });
+        toast.success("Campaign created successfully!", {
+          autoClose: 3000,
+          draggable: true,
+          pauseOnHover: false,
+        });
         setLoading(false);
         navigate("/");
       } else {
-        toast.error("Please provide a valid image URL");
+        toast.error("Please provide a valid image URL", {
+          autoClose: 3000,
+          draggable: true,
+          pauseOnHover: false,
+        });
         setForm({ ...form, image: "" });
       }
-    });
-
-    const targetString = ethers.utils.parseUnits(form.target.toString());
-    try {
-      await createCampaign({ ...form, target: targetString.toString() });
-      toast.success("Please provide a valid image URL");
     } catch (error) {
-      toast.error("Something went wrong");
+      setLoading(false)
+      toast.error("Something went wrong", {
+        autoClose: 3000,
+        draggable: true,
+        pauseOnHover: false,
+      });
     }
-    setLoading(false);
+    });
   };
 
   return (
     <PageTransition>
       <div className="bg-[#1c1c24] flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
-        {loading && "Loader..."}
+        {loading && <Loader />}
         <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-[#3a3a43] rounded-[10px]">
           <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-white">
             Start a Campaign 🚀

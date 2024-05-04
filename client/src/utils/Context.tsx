@@ -74,27 +74,39 @@ export const StateContextProvider = ({
     return filteredCampaigns;
   };
 
-  // const donate = async (pId, amount) => {
-  //   const data = await contract.call('donateToCampaign', [pId], { value: ethers.utils.parseEther(amount)});
+  const getUserCampaignsByAddress = async (address: string) => {
+    const allCampaigns = await getCampaigns();
 
-  //   return data;
-  // }
+    const filteredCampaigns = allCampaigns.filter(
+      (campaign: CampaignType) => campaign.owner === address
+    );
 
-  //   const getDonations = async (pId) => {
-  //     const donations = await contract.call('getDonators', [pId]);
-  //     const numberOfDonations = donations[0].length;
+    return filteredCampaigns;
+  };
 
-  //     const parsedDonations = [];
+  const donate = async (pId: number, amount: string) => {
+    const data = await contract.call("donateToCampaign", [pId], {
+      value: ethers.utils.parseEther(amount),
+    });
 
-  //     for(let i = 0; i < numberOfDonations; i++) {
-  //       parsedDonations.push({
-  //         donator: donations[0][i],
-  //         donation: ethers.utils.formatEther(donations[1][i].toString())
-  //       })
-  //     }
+    return data;
+  };
 
-  //     return parsedDonations;
-  //   }
+  const getDonations = async (pId: number) => {
+    const donations = await contract.call("getDonators", [pId]);
+    const numberOfDonations = donations[0].length;
+
+    const parsedDonations = [];
+
+    for (let i = 0; i < numberOfDonations; i++) {
+      parsedDonations.push({
+        donator: donations[0][i],
+        donation: ethers.utils.formatEther(donations[1][i].toString()),
+      });
+    }
+
+    return parsedDonations;
+  };
 
   return (
     <StateContext.Provider
@@ -104,8 +116,9 @@ export const StateContextProvider = ({
         createCampaign: publishCampaign,
         getCampaigns,
         getUserCampaigns,
-        // donate,
-        // getDonations
+        getUserCampaignsByAddress,
+        donate,
+        getDonations,
       }}
     >
       {children}

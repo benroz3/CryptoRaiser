@@ -4,11 +4,13 @@ import { ThirdwebProvider } from "@thirdweb-dev/react";
 import { ToastContainer } from "react-toastify";
 import { StateContextProvider } from "./utils/Context.tsx";
 import App from "./App.tsx";
+import 'react-toastify/dist/ReactToastify.css';
 import "./index.css";
 
-const customChain = {
+const Chain = {
+  // use for real ethereum transaction
   // chainId: 1,
-  // rpc: [`https://mainnet.infura.io/v3/`],
+  // rpc: [`https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_SECRET_KEY}`],
   chainId: 11155111,
   rpc: [
     `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_SECRET_KEY}`,
@@ -29,7 +31,7 @@ const customChain = {
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ThirdwebProvider
-      activeChain={customChain} //keep for testing
+      activeChain={Chain}
       clientId={import.meta.env.VITE_CLIENT_ID}
     >
       <StateContextProvider>

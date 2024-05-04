@@ -29,4 +29,7 @@ export interface StateContextType {
   createCampaign: (form: FormType) => Promise<void>;
   getCampaigns: () => Promise<CampaignType[]>;
   getUserCampaigns: () => Promise<CampaignType[]>;
+  getUserCampaignsByAddress: (address: string) => Promise<CampaignType[]>;
+  donate: (pId: number, amount: string) => Promise<string[]>;
+  getDonations: (pId: number) => Promise<{ donator: any; donation: string }[]>;
 }

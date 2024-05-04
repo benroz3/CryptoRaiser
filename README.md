@@ -1,5 +1,5 @@
 # CryptoRaiser
- A Web3 Blockchain Crowdfunding Platform.
+ A Web3 Blockchain Crowdfunding Platform using a smart contract.
 
  [Demo Link]()
  
