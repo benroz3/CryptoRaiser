@@ -41,7 +41,7 @@ module.exports = {
       sepolia: {  //keep for testing
         // url: "https://mainnet.infura.io/v3/",
         url: "https://sepolia.infura.io/v3/",  //keep for testing
-        accounts: [`${process.env.PRIVATE_KEY}`],
+        accounts: [`${process.env.WALLET_ADDRESS}`],
       },
     },
     settings: {

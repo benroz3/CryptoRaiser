@@ -11,23 +11,25 @@
 * TypeScript
 * TailwindCSS
 * Framer Motion
+* Docker
 * Solidity
 * third-web
-* Docker
 * Metamask
 
 ## Deploy
 
 ### Locally
-1. `cd client`
-2. Run `yarn` or `npm i` to install dependencies
-3. Run `yarn dev` or `npm run dev` to start the dev server
+1. Create `.env` in the `client` folder and the `thirdweb-contracts` folder using the example
+2. `cd client`
+3. Run `yarn` or `npm i` to install dependencies
+4. Run `yarn dev` or `npm run dev` to start the dev server
 
 ### With Docker
 1. Open Docker Desktop
-2. `cd client`
-3. Run `docker build -t CryptoRaiser .`
-4. Run `docker run -p 3000:3000 CryptoRaiser`
+1. Create `.env` in the `client` folder and the `thirdweb-contracts` folder using the example
+3. `cd client`
+4. Run `docker build -t CryptoRaiser .`
+5. Run `docker run -p 3000:3000 CryptoRaiser`
 
 * Different README file in the thirdweb-contracts folder.
 
