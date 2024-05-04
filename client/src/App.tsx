@@ -4,17 +4,22 @@ import { Sidebar, Navbar } from "./components";
 import { useState } from "react";
 
 const App = () => {
-  const [lightMode, setLightMode] = useState(false)
+  const [lightMode, setLightMode] = useState(false);
+  const [searchFilter, setSearchFilter] = useState("");
 
   return (
-    <div className={`relative sm:-8 p-4 ${lightMode? 'bg-[#bababa]':'bg-[#13131a]'} min-h-screen flex flex-row transition duration-400`}>
+    <div
+      className={`relative sm:-8 p-4 ${
+        lightMode ? "bg-[#bababa]" : "bg-[#13131a]"
+      } min-h-screen flex flex-row transition duration-400`}
+    >
       <div className="sm:flex hidden mr-10 relative">
-        <Sidebar setLightMode={setLightMode}/>
+        <Sidebar setLightMode={setLightMode} />
       </div>
       <div className="flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
-        <Navbar  />
+        <Navbar setSearchFilter={setSearchFilter} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home searchFilter={searchFilter} />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-campaign" element={<CreateCampaign />} />
           <Route path="/campaign-details/:id" element={<CampaignDetails />} />

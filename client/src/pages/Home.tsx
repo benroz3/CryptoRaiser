@@ -1,30 +1,48 @@
-import { useState, useEffect } from "react"
-import { PageTransition, DisplayCampaigns } from "../components"
-import { useStateContext } from "../utils/Context"
-import { CampaignType } from "../utils/types"
+import { useState, useEffect } from "react";
+import { PageTransition, DisplayCampaigns } from "../components";
+import { useStateContext } from "../utils/Context";
+import { CampaignType } from "../utils/types";
 
-const Home = () => {
-  const [loading, setLoading] = useState(false)
-  const [campaigns, setCampaigns] = useState<CampaignType[]>([])
+interface Props {
+  searchFilter: string;
+}
 
-  const { address, contract, getCampaigns } = useStateContext()
+const Home = ({ searchFilter }: Props) => {
+  const [loading, setLoading] = useState(false);
+  const [campaigns, setCampaigns] = useState<CampaignType[]>([]);
+
+  const { address, contract, getCampaigns } = useStateContext();
 
   const fetchCampaigns = async () => {
-    setLoading(true)
-    const data = await getCampaigns()
-    setCampaigns(data)
-    setLoading(false)
-  }
+    setLoading(true);
+    const data = await getCampaigns();
+    setCampaigns(data);
+    setLoading(false);
+  };
 
-  useEffect(()=>{
-    if(contract) fetchCampaigns()
-  },[address, contract])
+  useEffect(() => {
+    if (contract) fetchCampaigns();
+  }, [address, contract]);
+
+  const filterCampaignsByTitle = (campaigns: CampaignType[], searchFilter: string) => {
+    return campaigns.filter(campaign =>
+      campaign.title.toLowerCase().includes(searchFilter.toLowerCase())
+    );
+  };
+
+  const filteredCampaigns = searchFilter
+    ? filterCampaignsByTitle(campaigns, searchFilter)
+    : campaigns;
 
   return (
     <PageTransition>
-      <DisplayCampaigns title='All Campaigns' campaigns={campaigns} loading={loading} />
+      <DisplayCampaigns
+        title="All Campaigns"
+        campaigns={filteredCampaigns}
+        loading={loading}
+      />
     </PageTransition>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
