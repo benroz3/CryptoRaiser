@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
@@ -47,19 +47,25 @@ const CreateCampaign = () => {
 
     checkIfImage(form.image, async (exists: boolean) => {
       if (exists) {
-        await createCampaign({ ...form, target: ethers.utils.parseUnits(form.target.toString()).toString() });
+        await createCampaign({
+          ...form,
+          target: ethers.utils.parseUnits(form.target.toString()).toString(),
+        });
         setLoading(false);
         navigate("/");
-      }
-      else {
+      } else {
         toast.error("Please provide a valid image URL");
-        setForm({...form, image: "" });
+        setForm({ ...form, image: "" });
       }
-
     });
 
     const targetString = ethers.utils.parseUnits(form.target.toString());
-    await createCampaign({ ...form, target: targetString.toString() });
+    try {
+      await createCampaign({ ...form, target: targetString.toString() });
+      toast.success("Please provide a valid image URL");
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
     setLoading(false);
   };
 
