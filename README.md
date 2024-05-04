@@ -1,7 +1,7 @@
 # CryptoRaiser
  A Web3 Blockchain Crowdfunding Platform using a smart contract.
 
- [Demo Link]()
+ [Demo Link](https://crypto-raiser.netlify.app/)
  
  ![Showcase Image](/client/src/assets/showcase.png)
 
