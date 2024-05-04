@@ -3,7 +3,7 @@
 
  [Demo Link]()
  
- ![Showcase Image]()
+ ![Showcase Image](/client/src/assets/showcase.png)
 
 ## Technologies used
 * React
