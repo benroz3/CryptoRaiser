@@ -5,12 +5,16 @@ import {
   SmartContract,
   useAddress,
 } from "@thirdweb-dev/react";
-import { FormType } from "./types";
+import { ethers } from "ethers";
+import { CampaignType, FormType } from "./types";
 
 const StateContext = createContext({
   address: '',
   contract: {} as SmartContract,
   createCampaign: (form: FormType): void => {},
+  getCampaigns: (): Promise<CampaignType[]> => {
+    return Promise.resolve([]);
+  }
 });
 
 export const StateContextProvider = ({
@@ -46,22 +50,22 @@ export const StateContextProvider = ({
     } catch (error) {}
   };
 
-  //   const getCampaigns = async () => {
-  //     const campaigns = await contract.call('getCampaigns');
+    const getCampaigns = async () => {
+      const campaigns = await contract.call('getCampaigns');
 
-  //     const parsedCampaings = campaigns.map((campaign, i) => ({
-  //       owner: campaign.owner,
-  //       title: campaign.title,
-  //       description: campaign.description,
-  //       target: ethers.utils.formatEther(campaign.target.toString()),
-  //       deadline: campaign.deadline.toNumber(),
-  //       amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
-  //       image: campaign.image,
-  //       pId: i
-  //     }));
+      const parsedCampaigns = campaigns.map((campaign:CampaignType, index:number) => ({
+        owner: campaign.owner,
+        title: campaign.title,
+        description: campaign.description,
+        target: ethers.utils.formatEther(campaign.target.toString()),
+        deadline: parseInt(campaign.deadline.toString()),
+        amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
+        image: campaign.image,
+        pId: index
+      }));
 
-  //     return parsedCampaings;
-  //   }
+      return parsedCampaigns;
+    }
 
   //   const getUserCampaigns = async () => {
   //     const allCampaigns = await getCampaigns();
@@ -99,7 +103,7 @@ export const StateContextProvider = ({
         address,
         contract,
         createCampaign: publishCampaign,
-        // getCampaigns,
+        getCampaigns,
         // getUserCampaigns,
         // donate,
         // getDonations

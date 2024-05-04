@@ -4,7 +4,7 @@ import { useConnect, metamaskWallet } from "@thirdweb-dev/react";
 import { useStateContext } from "../utils/Context";
 import { CustomButton } from "./";
 import { navLinks } from "../utils/routes";
-import { logo, menu, search, thirdweb } from "../assets";
+import { logo, menu, search, backdrop } from "../assets";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Navbar = () => {
         <Link to="/profile">
           <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer hover:bg-[#59595a] transition">
             <img
-              src={thirdweb}
+              src={backdrop}
               alt="user"
               className="w-[60%] h-[60%] object-contain"
             />
@@ -61,6 +61,7 @@ const Navbar = () => {
           <img
             src={logo}
             alt="user"
+            style={{ filter: "invert(1)" }}
             className="w-[60%] h-[60%] object-contain"
           />
         </div>

@@ -33,13 +33,14 @@ const Icon = ({
         <img
           src={imgUrl}
           style={{ filter: "invert(1)" }}
-          alt={"fund-logo"}
+          alt={"logo"}
           className={`w-1/2 h-1/2`}
         />
       ) : (
         <img
           src={imgUrl}
-          alt={"fund-logo"}
+          style={{ filter: "invert(1)" }}
+          alt={"logo"}
           className={`w-1/2 h-1/2 ${isActive !== name && "grayscale"}`}
         />
       )}

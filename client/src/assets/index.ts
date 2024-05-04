@@ -10,7 +10,7 @@ import search from './search.svg';
 import menu from './menu.svg';
 import money from './money.svg';
 import loader from './loader.svg';
-import thirdweb from './thirdweb.png';
+import backdrop from './backdrop.png';
 import logo from './logo.png'
 
 export {
@@ -27,5 +27,5 @@ export {
   menu,
   money,
   loader,
-  thirdweb,
+  backdrop,
 };

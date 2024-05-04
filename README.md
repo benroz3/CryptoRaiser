@@ -14,6 +14,7 @@
 * Solidity
 * third-web
 * Docker
+* Metamask
 
 ## Deploy
 
@@ -34,3 +35,4 @@
 
 1. [Thirdweb](https://thirdweb.com/) - for creating a contract and deploying it to the blockchain.
 2. [infura](https://app.infura.io/) - for creating an account and getting an API key.
+3. [Metamask](https://metamask.io/) - for connecting to the blockchain.
