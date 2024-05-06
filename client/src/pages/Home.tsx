@@ -30,15 +30,21 @@ const Home = ({ searchFilter }: Props) => {
     );
   };
 
+  const sortCampaignsAlphabetically = (campaigns: CampaignType[]) => {
+    return campaigns.slice().sort((a, b) => a.title.localeCompare(b.title));
+  };
+
   const filteredCampaigns = searchFilter
     ? filterCampaignsByTitle(campaigns, searchFilter)
     : campaigns;
+
+  const sortedCampaigns = sortCampaignsAlphabetically(filteredCampaigns);
 
   return (
     <PageTransition>
       <DisplayCampaigns
         title="All Campaigns"
-        campaigns={filteredCampaigns}
+        campaigns={sortedCampaigns}
         loading={loading}
       />
     </PageTransition>
