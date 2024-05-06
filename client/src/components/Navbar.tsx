@@ -5,6 +5,7 @@ import { useStateContext } from "../utils/Context";
 import { CustomButton } from "./";
 import { navLinks } from "../utils/routes";
 import { logo, menu, search, backdrop } from "../assets";
+import { toast } from "react-toastify";
 
 interface Props {
   setSearchFilter: Dispatch<SetStateAction<string>>;
@@ -25,7 +26,9 @@ const Navbar = ({ setSearchFilter }: Props) => {
       <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px] hover:bg-[#26262e] transition">
         <input
           type="text"
-          onChange={(event)=>{setSearchFilter(event.target.value)}}
+          onChange={(event) => {
+            setSearchFilter(event.target.value);
+          }}
           placeholder="Search for campaigns"
           className="flex w-full font-epilogue font-normal text=[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none"
         />
@@ -48,7 +51,21 @@ const Navbar = ({ setSearchFilter }: Props) => {
           }
           handleClick={async () => {
             if (address) navigate("create-campaign");
-            else await connect(metamaskConfig);
+            else
+              try {
+                await connect(metamaskConfig);
+                toast.success("Successfully connected to Metamask!", {
+                  autoClose: 3000,
+                  draggable: true,
+                  pauseOnHover: false,
+                });
+              } catch (err) {
+                toast.error("Metamask connection failed!", {
+                  autoClose: 3000,
+                  draggable: true,
+                  pauseOnHover: false,
+                });
+              }
           }}
         />
         <Link to="/profile">
@@ -118,7 +135,21 @@ const Navbar = ({ setSearchFilter }: Props) => {
               styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
               handleClick={async () => {
                 if (address) navigate("create-campaign");
-                else await connect(metamaskConfig);
+                else
+                  try {
+                    await connect(metamaskConfig);
+                    toast.success("Successfully connected to Metamask!", {
+                      autoClose: 3000,
+                      draggable: true,
+                      pauseOnHover: false,
+                    });
+                  } catch (err) {
+                    toast.error("Metamask connection failed!", {
+                      autoClose: 3000,
+                      draggable: true,
+                      pauseOnHover: false,
+                    });
+                  }
               }}
             />
           </div>

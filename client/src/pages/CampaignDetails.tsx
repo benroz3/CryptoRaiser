@@ -156,7 +156,7 @@ const CampaignDetails = () => {
                         {index + 1}. {donator.donator}
                       </p>
                       <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-all">
-                        {donator.donation}
+                        {donator.donation} ETH
                       </p>
                     </div>
                   ))
