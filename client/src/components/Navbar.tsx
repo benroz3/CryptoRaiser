@@ -1,6 +1,26 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useConnect, metamaskWallet } from "@thirdweb-dev/react";
+import {
+  useConnect,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+  safeWallet,
+  inAppWallet,
+  localWallet,
+  rainbowWallet,
+  zerionWallet,
+  bloctoWallet,
+  frameWallet,
+  phantomWallet,
+  coin98Wallet,
+  coreWallet,
+  cryptoDefiWallet,
+  okxWallet,
+  oneKeyWallet,
+  rabbyWallet,
+  xdefiWallet,
+} from "@thirdweb-dev/react";
 import { useStateContext } from "../utils/Context";
 import { CustomButton } from "./";
 import { navLinks } from "../utils/routes";
@@ -17,9 +37,88 @@ const Navbar = ({ setSearchFilter }: Props) => {
 
   const [isActive, setIsActive] = useState("dashboard");
   const [toggleDrawer, setToggleDrawer] = useState(false);
+  const [wallet, setWallet] = useState("metamask");
 
   const { address } = useStateContext();
-  const metamaskConfig = metamaskWallet();
+
+  const handleWallet = async () => {
+    let walletConfig: any;
+    switch (wallet) {
+      case "metamask":
+        walletConfig = metamaskWallet();
+        break;
+      case "coinbase":
+        walletConfig = coinbaseWallet();
+        break;
+      case "walletConnect":
+        walletConfig = walletConnect();
+        break;
+      case "safe":
+        walletConfig = safeWallet();
+        break;
+      case "inApp":
+        walletConfig = inAppWallet();
+        break;
+      case "local":
+        walletConfig = localWallet();
+        break;
+      case "rainbow":
+        walletConfig = rainbowWallet();
+        break;
+      case "zerion":
+        walletConfig = zerionWallet();
+        break;
+      case "blocto":
+        walletConfig = bloctoWallet();
+        break;
+      case "frame":
+        walletConfig = frameWallet();
+        break;
+      case "phantom":
+        walletConfig = phantomWallet();
+        break;
+      case "coin98":
+        walletConfig = coin98Wallet();
+        break;
+      case "core":
+        walletConfig = coreWallet();
+        break;
+      case "cryptoDefi":
+        walletConfig = cryptoDefiWallet();
+        break;
+      case "okx":
+        walletConfig = okxWallet();
+        break;
+      case "oneKey":
+        walletConfig = oneKeyWallet();
+        break;
+      case "rabby":
+        walletConfig = rabbyWallet();
+        break;
+      case "xdefi":
+        walletConfig = xdefiWallet();
+        break;
+      default:
+        break;
+    }
+
+    if (walletConfig) {
+      try {
+        await connect(walletConfig);
+        toast.success(`Successfully connected to ${wallet} wallet!`, {
+          autoClose: 3000,
+          draggable: true,
+          pauseOnHover: false,
+        });
+      } catch (err) {
+        toast.error(`${wallet} connection failed!`, {
+          autoClose: 3000,
+          draggable: true,
+          pauseOnHover: false,
+        });
+      }
+    }
+  };
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
@@ -41,6 +140,71 @@ const Navbar = ({ setSearchFilter }: Props) => {
         </div>
       </div>
       <div className="sm:flex hidden flex-row justify-end gap-4">
+        {!address && (
+          <select
+            value={wallet}
+            onChange={(event) => setWallet(event.target.value)}
+            className="bg-transparent outline-none text-white cursor-pointer rounded-lg hover:bg-[#59595a] transition"
+          >
+            <option className="bg-[#26262e]" value="metamask">
+              Metamask
+            </option>
+            <option className="bg-[#26262e]" value="coinbase">
+              Coinbase
+            </option>
+            <option className="bg-[#26262e]" value="walletConnect">
+              WalletConnect
+            </option>
+            <option className="bg-[#26262e]" value="smart">
+              Smart Account
+            </option>
+            <option className="bg-[#26262e]" value="safe">
+              Safe
+            </option>
+            <option className="bg-[#26262e]" value="inApp">
+              In-App Wallet
+            </option>
+            <option className="bg-[#26262e]" value="local">
+              Local Wallet
+            </option>
+            <option className="bg-[#26262e]" value="rainbow">
+              Rainbow
+            </option>
+            <option className="bg-[#26262e]" value="zerion">
+              Zerion
+            </option>
+            <option className="bg-[#26262e]" value="blocto">
+              Blocto
+            </option>
+            <option className="bg-[#26262e]" value="frame">
+              Frame
+            </option>
+            <option className="bg-[#26262e]" value="phantom">
+              Phantom
+            </option>
+            <option className="bg-[#26262e]" value="coin98">
+              Coin98
+            </option>
+            <option className="bg-[#26262e]" value="core">
+              Core Wallet
+            </option>
+            <option className="bg-[#26262e]" value="cryptoDefi">
+              CryptoDefi
+            </option>
+            <option className="bg-[#26262e]" value="okx">
+              OKX Wallet
+            </option>
+            <option className="bg-[#26262e]" value="oneKey">
+              OneKey Wallet
+            </option>
+            <option className="bg-[#26262e]" value="rabby">
+              Rabby Wallet
+            </option>
+            <option className="bg-[#26262e]" value="xdefi">
+              Xdefi Wallet
+            </option>
+          </select>
+        )}
         <CustomButton
           btnType={"button"}
           title={address ? "Create a campaign" : "Connect"}
@@ -51,21 +215,7 @@ const Navbar = ({ setSearchFilter }: Props) => {
           }
           handleClick={async () => {
             if (address) navigate("create-campaign");
-            else
-              try {
-                await connect(metamaskConfig);
-                toast.success("Successfully connected to Metamask!", {
-                  autoClose: 3000,
-                  draggable: true,
-                  pauseOnHover: false,
-                });
-              } catch (err) {
-                toast.error("Metamask connection failed!", {
-                  autoClose: 3000,
-                  draggable: true,
-                  pauseOnHover: false,
-                });
-              }
+            else handleWallet();
           }}
         />
         <Link to="/profile">
@@ -128,28 +278,79 @@ const Navbar = ({ setSearchFilter }: Props) => {
               </li>
             ))}
           </ul>
-          <div className="flex mx-4">
+          <div className="flex mx-4 justify-between">
+            {!address && (
+              <select
+                value={wallet}
+                onChange={(event) => setWallet(event.target.value)}
+                className="bg-transparent outline-none text-white cursor-pointer rounded-lg hover:bg-[#59595a] transition"
+              >
+                <option className="bg-[#26262e]" value="metamask">
+                  Metamask
+                </option>
+                <option className="bg-[#26262e]" value="coinbase">
+                  Coinbase
+                </option>
+                <option className="bg-[#26262e]" value="walletConnect">
+                  WalletConnect
+                </option>
+                <option className="bg-[#26262e]" value="smart">
+                  Smart Account
+                </option>
+                <option className="bg-[#26262e]" value="safe">
+                  Safe
+                </option>
+                <option className="bg-[#26262e]" value="inApp">
+                  In-App Wallet
+                </option>
+                <option className="bg-[#26262e]" value="local">
+                  Local Wallet
+                </option>
+                <option className="bg-[#26262e]" value="rainbow">
+                  Rainbow
+                </option>
+                <option className="bg-[#26262e]" value="zerion">
+                  Zerion
+                </option>
+                <option className="bg-[#26262e]" value="blocto">
+                  Blocto
+                </option>
+                <option className="bg-[#26262e]" value="frame">
+                  Frame
+                </option>
+                <option className="bg-[#26262e]" value="phantom">
+                  Phantom
+                </option>
+                <option className="bg-[#26262e]" value="coin98">
+                  Coin98
+                </option>
+                <option className="bg-[#26262e]" value="core">
+                  Core Wallet
+                </option>
+                <option className="bg-[#26262e]" value="cryptoDefi">
+                  CryptoDefi
+                </option>
+                <option className="bg-[#26262e]" value="okx">
+                  OKX Wallet
+                </option>
+                <option className="bg-[#26262e]" value="oneKey">
+                  OneKey Wallet
+                </option>
+                <option className="bg-[#26262e]" value="rabby">
+                  Rabby Wallet
+                </option>
+                <option className="bg-[#26262e]" value="xdefi">
+                  Xdefi Wallet
+                </option>
+              </select>
+            )}
             <CustomButton
               btnType={"button"}
               title={address ? "Create a campaign" : "Connect"}
               styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
               handleClick={async () => {
                 if (address) navigate("create-campaign");
-                else
-                  try {
-                    await connect(metamaskConfig);
-                    toast.success("Successfully connected to Metamask!", {
-                      autoClose: 3000,
-                      draggable: true,
-                      pauseOnHover: false,
-                    });
-                  } catch (err) {
-                    toast.error("Metamask connection failed!", {
-                      autoClose: 3000,
-                      draggable: true,
-                      pauseOnHover: false,
-                    });
-                  }
+                else handleWallet();
               }}
             />
           </div>

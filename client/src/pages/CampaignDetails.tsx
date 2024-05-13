@@ -183,7 +183,7 @@ const CampaignDetails = () => {
                     value={amount}
                     min={0}
                     onChange={(event) => setAmount(event.target.value)}
-                    className="w-full sm:px-[20px] px-[15px] py-[10px] outline-none border-[1px] border-[#3a3a43] rounded-[10px] bg-transparent text-[#4acd8d] placeholder-[#4acd8d] font-epilogue text-[18px] leading-[30px]"
+                    className="w-full sm:px-[20px] px-[15px] py-[10px] outline-none border-[1px] border-[#3a3a43] rounded-[10px] bg-transparent text-[#4acd8d] placeholder-[#4acd8d] font-epilogue text-[18px] leading-[30px] hover:bg-[#26262e] transition"
                   />
                   <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
                     <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">
