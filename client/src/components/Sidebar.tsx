@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDisconnect } from "@thirdweb-dev/react";
 import { navLinks } from "../utils/routes";
+import { useStateContext } from "../utils/Context";
 import { logo, sun } from "../assets";
 
 interface Props {
@@ -26,11 +27,13 @@ const Icon = ({
   handleClick,
 }: Props) => {
   const disconnect = useDisconnect();
+  const { address } = useStateContext();
 
   return (
     <div
       className={`w-[48px] h-[48px] rounded-[10px] flex justify-center items-center hover:bg-[#3d3e3f] transition cursor-pointer
       ${style}
+      ${logout && !address && 'hidden'}
       ${isActive && isActive === name && "bg-[#2c2f32]"}
       `}
       onClick={logout ? disconnect : handleClick}

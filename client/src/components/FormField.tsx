@@ -24,7 +24,7 @@ const FormField = ({
       )}
       {isTextArea ? (
         <textarea
-          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text=[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]"
+          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text=[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px] hover:bg-[#26262e] transition"
           required
           value={value}
           rows={10}
@@ -33,7 +33,7 @@ const FormField = ({
         />
       ) : (
         <input
-          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text=[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]"
+          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text=[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px] hover:bg-[#26262e] transition"
           required
           value={value}
           type={inputType}
